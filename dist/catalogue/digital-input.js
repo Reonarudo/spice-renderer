@@ -1,5 +1,5 @@
 /** PSpice's digital-to-analog interface `N interface low high model DGTLNET=net iomodel` (RG p.434–436). */
-export default {
+const element = {
     name: 'digital input',
     spellings: [{ dialect: 'pspice', letter: 'N' }],
     forms: [
@@ -15,3 +15,4 @@ export default {
     tail: 'model',
     draw: { block: { title: { fixed: 'digital input' } } }
 };
+export default element;

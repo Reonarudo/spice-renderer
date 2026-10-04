@@ -1,8 +1,9 @@
 /** Spectre's multiconductor line `mtline`, with as many terminals as the line has conductors (REF03 p.576). */
-export default {
+const element = {
     name: 'multiconductor line',
     spellings: [{ dialect: 'spectre', master: 'mtline' }],
     forms: [{ terminals: [], nodesEnd: 'all-positional' }],
     tail: 'none',
     draw: { block: { title: { fixed: 'coupled line' }, pins: 'numbered' } }
 };
+export default element;

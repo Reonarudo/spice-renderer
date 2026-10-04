@@ -6,7 +6,7 @@ import { CONTROLLED_SOURCE, everySpiceDialect, spectreMasters } from './shared.j
  * PSpice's charge source `G … Q=`; HSPICE adds `VCR`, `VCCAP`, `NPWL`, `PPWL` (UG p.244–253).
  * ngspice's four-node `TABLE =` is E only. Spectre `vccs (sink src ps ns)` and `pvccs`.
  */
-export default {
+const element: ElementType = {
   name: 'VCCS',
   spellings: [...everySpiceDialect('G'), ...spectreMasters('vccs', 'pvccs')],
   forms: [
@@ -49,4 +49,6 @@ export default {
   ],
   tail: 'value',
   draw: { block: { title: { fixed: 'VCCS' } } }
-} satisfies ElementType;
+};
+
+export default element;

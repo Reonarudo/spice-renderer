@@ -2,7 +2,7 @@ import type { ElementType } from './types.js';
 import { DIGITAL_SUPPLY } from './shared.js';
 
 /** PSpice's bidirectional transfer gates `NBTG`/`PBTG`: gate, channel 1, channel 2 (RG p.363). */
-export default {
+const element: ElementType = {
   name: 'digital transfer gate',
   spellings: [{ dialect: 'pspice', letter: 'U', select: { by: 'keyword', keywords: ['NBTG', 'PBTG'] } }],
   forms: [
@@ -13,4 +13,6 @@ export default {
   ],
   tail: 'model',
   draw: { block: { title: 'keyword-with-arguments' } }
-} satisfies ElementType;
+};
+
+export default element;

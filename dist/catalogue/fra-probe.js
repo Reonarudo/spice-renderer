@@ -1,5 +1,5 @@
 /** LTspice's FRA probe `&name o+ o- i+ i-` (four nodes, no parameters). */
-export default {
+const element = {
     name: 'FRA probe',
     spellings: [{ dialect: 'ltspice', letter: '&' }],
     forms: [
@@ -16,3 +16,4 @@ export default {
     tail: 'none',
     draw: { block: { title: { fixed: 'FRA probe' } } }
 };
+export default element;

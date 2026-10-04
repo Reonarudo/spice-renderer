@@ -5,7 +5,7 @@ import type { ElementType } from './types.js';
  * p.29), Spectre `nport (t1 b1 [t2 b2 …]) file=`, Xyce `YLIN name t1 b1 … model`. HSPICE's pins are
  * numbered because a drawing cannot tell reference nodes from port nodes without the model.
  */
-export default {
+const element: ElementType = {
   name: 'n-port',
   spellings: [
     { dialect: 'hspice', letter: 'S' },
@@ -29,4 +29,6 @@ export default {
   ],
   tail: 'model',
   draw: { block: { title: { fixed: 'n-port' }, pins: 'numbered' } }
-} satisfies ElementType;
+};
+
+export default element;

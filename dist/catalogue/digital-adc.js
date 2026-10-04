@@ -1,6 +1,6 @@
 import { DIGITAL_SUPPLY } from './shared.js';
 /** PSpice's `ADC(b)`: in, ref, gnd, convert, status, over-range, b outputs (RG p.393). */
-export default {
+const element = {
     name: 'digital ADC',
     spellings: [{ dialect: 'pspice', letter: 'U', select: { by: 'keyword', keywords: ['ADC'] } }],
     forms: [
@@ -22,3 +22,4 @@ export default {
     tail: 'model',
     draw: { block: { title: 'keyword-with-arguments' } }
 };
+export default element;

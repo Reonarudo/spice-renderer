@@ -4,7 +4,7 @@ import { CONTROLLED_SOURCE } from './shared.js';
  * `S n+ n- model CONTROL={expr}` with two nodes (RG §2.3.22). HSPICE's `S` is the S-parameter
  * n-port instead. Spectre `relay (1 2 ps ns)`.
  */
-export default {
+const element = {
     name: 'voltage-controlled switch',
     spellings: [
         { dialect: 'ngspice', letter: 'S' },
@@ -26,3 +26,4 @@ export default {
     tail: 'model',
     draw: { block: { title: { fixed: 'switch' } } }
 };
+export default element;

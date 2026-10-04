@@ -2,7 +2,7 @@
  * The uniform distributed RC line `U n1 n2 ncommon model L=len` (ngspice M §6.3, LTspice). PSpice
  * and Xyce read `U` as a digital primitive, HSPICE as a lumped lossy line.
  */
-export default {
+const element = {
     name: 'RC line',
     spellings: [
         { dialect: 'ngspice', letter: 'U' },
@@ -22,3 +22,4 @@ export default {
     tail: 'model',
     draw: { block: { title: { fixed: 'RC line' } } }
 };
+export default element;

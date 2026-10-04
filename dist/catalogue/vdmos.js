@@ -4,7 +4,7 @@
  * `VDMOS(… pchan)`, ngspice `vdmos pchan` or `vdmosp`; Xyce uses NMOS/PMOS level 18. Drawn with
  * the three-pin symbol, P-channel when the model says so (#1197).
  */
-export default {
+const element = {
     name: 'VDMOS',
     spellings: [
         { dialect: 'ngspice', letter: 'M', select: { by: 'model-type', types: ['vdmos', 'vdmosn', 'vdmosp'] } },
@@ -33,3 +33,4 @@ export default {
         }
     }
 };
+export default element;

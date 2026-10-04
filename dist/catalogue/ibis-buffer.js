@@ -15,7 +15,7 @@ const GC_OPTIONAL = { ...GC, optional: true };
  * the empty form numbers them. The supply pins `nd_pu nd_pd nd_pc nd_gc` sit on the top and bottom
  * edges (#1197).
  */
-export default {
+const element = {
     name: 'IBIS buffer',
     spellings: [{ dialect: 'hspice', letter: 'B' }],
     forms: [
@@ -33,3 +33,4 @@ export default {
     tail: 'none',
     draw: { block: { title: { fixed: 'IBIS buffer' } } }
 };
+export default element;

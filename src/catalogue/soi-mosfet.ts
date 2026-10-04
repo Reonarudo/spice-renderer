@@ -5,7 +5,7 @@ import type { ElementType } from './types.js';
  * M §7.7, Spectre `bsimsoi`, Xyce levels 10 and 70), SOI3 `d g s bg [b] [t]`. Drawn with the
  * four-terminal symbol; the back gate takes the symbol's `B` pin and the rest are not drawn.
  */
-export default {
+const element: ElementType = {
   name: 'SOI MOSFET',
   spellings: [
     { dialect: 'ngspice', letter: 'M', select: { by: 'model-type', types: ['b4soi', 'b3soipd', 'b3soifd', 'b3soidd', 'nsoi', 'psoi'] } },
@@ -35,4 +35,6 @@ export default {
       note: 'drawn as NMOS'
     }
   }
-} satisfies ElementType;
+};
+
+export default element;

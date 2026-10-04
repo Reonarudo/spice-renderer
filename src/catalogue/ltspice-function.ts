@@ -19,7 +19,7 @@ const EIGHT: readonly Terminal[] = [
   { name: '8', side: 'bottom' }
 ];
 
-export default {
+const element: ElementType = {
   name: 'special function',
   spellings: [{ dialect: 'ltspice', letter: 'A' }],
   forms: [
@@ -32,4 +32,6 @@ export default {
   ],
   tail: 'none',
   draw: { block: { title: 'keyword', pins: 'hide-tied-to-common' } }
-} satisfies ElementType;
+};
+
+export default element;

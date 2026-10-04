@@ -1,6 +1,6 @@
 import { PLUS_MINUS } from './shared.js';
 /** The current-controlled switch `W n+ n- Vname model [on|off]`. HSPICE's `W` is a coupled lossy line instead. */
-export default {
+const element = {
     name: 'current-controlled switch',
     spellings: [
         { dialect: 'ngspice', letter: 'W' },
@@ -13,3 +13,4 @@ export default {
     tail: 'model',
     draw: { block: { title: { fixed: 'switch' } } }
 };
+export default element;

@@ -11,7 +11,7 @@ import { CONTROLLED_SOURCE, everySpiceDialect, spectreMasters } from './shared.j
  *   and only `VOL=` and `NOISE=` are two-node.
  * Spectre `vcvs (p n ps ns)` and the polynomial `pvcvs`.
  */
-export default {
+const element = {
     name: 'VCVS',
     spellings: [...everySpiceDialect('E'), ...spectreMasters('vcvs', 'pvcvs')],
     forms: [
@@ -55,3 +55,4 @@ export default {
     tail: 'value',
     draw: { block: { title: { fixed: 'VCVS' } } }
 };
+export default element;

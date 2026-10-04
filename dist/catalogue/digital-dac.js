@@ -1,6 +1,6 @@
 import { DIGITAL_SUPPLY } from './shared.js';
 /** PSpice's `DAC(b)`: out, ref, gnd, b inputs (RG p.395). */
-export default {
+const element = {
     name: 'digital DAC',
     spellings: [{ dialect: 'pspice', letter: 'U', select: { by: 'keyword', keywords: ['DAC'] } }],
     forms: [
@@ -19,3 +19,4 @@ export default {
     tail: 'model',
     draw: { block: { title: 'keyword-with-arguments' } }
 };
+export default element;

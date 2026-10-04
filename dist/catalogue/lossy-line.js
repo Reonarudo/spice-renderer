@@ -1,6 +1,6 @@
 import { LINE_PORTS } from './shared.js';
 /** The LTRA lossy line `O a+ a- b+ b- model`. PSpice's `O` is a digital output and HSPICE has no `O`. */
-export default {
+const element = {
     name: 'lossy transmission line',
     spellings: [
         { dialect: 'ngspice', letter: 'O' },
@@ -12,3 +12,4 @@ export default {
     tail: 'model',
     draw: { block: { title: { fixed: 'lossy line' } } }
 };
+export default element;

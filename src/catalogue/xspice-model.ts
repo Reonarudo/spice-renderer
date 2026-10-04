@@ -5,10 +5,12 @@ import type { ElementType } from './types.js';
  * interface, the last token is the model name, and ports may be vectors `[a b]`, typed `%vd(a b)`
  * pairs, inverted `~d`, or `null` (M §8.1.1). Pins are numbered by position (#1197).
  */
-export default {
+const element: ElementType = {
   name: 'code model',
   spellings: [{ dialect: 'ngspice', letter: 'A' }],
   forms: [{ terminals: [], nodesEnd: 'last-positional' }],
   tail: 'model',
   draw: { block: { title: 'model-type', pins: 'xspice-ports' } }
-} satisfies ElementType;
+};
+
+export default element;

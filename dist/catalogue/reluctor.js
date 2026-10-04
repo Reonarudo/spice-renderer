@@ -2,7 +2,7 @@
  * HSPICE's reluctor: `L n1+ n1- … nN+ nN- RELUCTANCE=(…)`, an even number of nodes (UG p.141–152).
  * Told from an inductor by the `RELUCTANCE=` pair.
  */
-export default {
+const element = {
     name: 'reluctor',
     spellings: [{ dialect: 'hspice', letter: 'L', select: { by: 'pair', keys: ['RELUCTANCE'] } }],
     forms: [
@@ -15,3 +15,4 @@ export default {
     tail: 'none',
     draw: { block: { title: { fixed: 'reluctor' } } }
 };
+export default element;

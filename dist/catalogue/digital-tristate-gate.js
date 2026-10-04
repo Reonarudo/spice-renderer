@@ -1,6 +1,6 @@
 import { DIGITAL_SUPPLY } from './shared.js';
 /** PSpice's tristate gates (RG p.360–361): as the gates and arrays, with one enable before the outputs. */
-export default {
+const element = {
     name: 'digital tristate gate',
     spellings: [
         {
@@ -51,3 +51,4 @@ export default {
     tail: 'model',
     draw: { block: { title: 'keyword-with-arguments' } }
 };
+export default element;

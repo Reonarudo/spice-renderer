@@ -4,10 +4,11 @@
  * titled with the type and numbered pins (#1188). Undocumented types have no positional model, so
  * every positional token is a node.
  */
-export default {
+const element = {
     name: 'Xyce device',
     spellings: [{ dialect: 'xyce', letter: 'Y' }],
     forms: [{ terminals: [], nodesEnd: 'all-positional' }],
     tail: 'none',
     draw: { block: { title: 'suffix', pins: 'numbered' } }
 };
+export default element;

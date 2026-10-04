@@ -4,7 +4,7 @@ import type { ElementType } from './types.js';
  * The insulated-gate bipolar transistor, `Z c g e model`: PSpice's only `Z` (model `NIGBT`), and
  * LTspice's `Z` when its model is `NIGBT` or `PIGBT` (else a MESFET).
  */
-export default {
+const element: ElementType = {
   name: 'IGBT',
   spellings: [
     { dialect: 'pspice', letter: 'Z' },
@@ -22,4 +22,6 @@ export default {
   ],
   tail: 'model',
   draw: { block: { title: { fixed: 'IGBT' }, polarity: { byModelType: { nigbt: 'N', pigbt: 'P' } } } }
-} satisfies ElementType;
+};
+
+export default element;

@@ -1,6 +1,6 @@
 import { DIGITAL_SUPPLY } from './shared.js';
 /** PSpice's stimulus generators `STIM(w,format)` with w outputs and `FSTIM(k)` with k (RG p.418, 427). */
-export default {
+const element = {
     name: 'digital stimulus',
     spellings: [{ dialect: 'pspice', letter: 'U', select: { by: 'keyword', keywords: ['STIM', 'FSTIM'] } }],
     forms: [
@@ -13,3 +13,4 @@ export default {
     tail: 'model',
     draw: { block: { title: 'keyword-with-arguments' } }
 };
+export default element;

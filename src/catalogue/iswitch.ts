@@ -2,7 +2,7 @@ import type { ElementType } from './types.js';
 import { PLUS_MINUS } from './shared.js';
 
 /** The current-controlled switch `W n+ n- Vname model [on|off]`. HSPICE's `W` is a coupled lossy line instead. */
-export default {
+const element: ElementType = {
   name: 'current-controlled switch',
   spellings: [
     { dialect: 'ngspice', letter: 'W' },
@@ -14,4 +14,6 @@ export default {
   forms: [{ terminals: PLUS_MINUS, nodesEnd: 'count' }],
   tail: 'model',
   draw: { block: { title: { fixed: 'switch' } } }
-} satisfies ElementType;
+};
+
+export default element;

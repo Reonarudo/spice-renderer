@@ -5,7 +5,7 @@ import { everySpiceDialect } from './shared.js';
  * substrate as `[SUB]`). Spectre `bjt (c b e [s])` and `vbic (c b e [s] [dt] [tl])`. NPN unless the
  * model says otherwise: `pnp`, PSpice's lateral `lpnp`, Spectre `type=pnp`.
  */
-export default {
+const element = {
     name: 'bipolar transistor',
     spellings: [...everySpiceDialect('Q'), { dialect: 'spectre', master: 'bjt' }, { dialect: 'spectre', master: 'vbic' }],
     forms: [
@@ -31,3 +31,4 @@ export default {
         }
     }
 };
+export default element;

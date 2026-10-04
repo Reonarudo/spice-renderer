@@ -5,7 +5,7 @@ import { PLUS_MINUS } from './shared.js';
  * A two-node port for S-parameter analysis: HSPICE `P p n port=k …` (UG p.184), Xyce `P n+ n- port=k`
  * (RG §2.3.11), Spectre `port (p n) num=`. ngspice's `P` is the coupled line.
  */
-export default {
+const element: ElementType = {
   name: 'port',
   spellings: [
     { dialect: 'hspice', letter: 'P' },
@@ -15,4 +15,6 @@ export default {
   forms: [{ terminals: PLUS_MINUS, nodesEnd: 'count' }],
   tail: 'value',
   draw: { block: { title: { fixed: 'port' } } }
-} satisfies ElementType;
+};
+
+export default element;

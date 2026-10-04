@@ -6,7 +6,7 @@ import { A_B, everySpiceDialect } from './shared.js';
  * terminal. LTspice's `I … R=` "is not a current source at all, but a resistor", and `B … R=` is a
  * behavioural resistor; both are drawn as one (#1197).
  */
-export default {
+const element: ElementType = {
   name: 'resistor',
   spellings: [
     ...everySpiceDialect('R'),
@@ -20,4 +20,6 @@ export default {
   ],
   tail: 'value',
   draw: { symbol: 'resistor' }
-} satisfies ElementType;
+};
+
+export default element;

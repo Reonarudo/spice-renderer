@@ -2,7 +2,7 @@ import type { ElementType } from './types.js';
 import { LINE_PORTS } from './shared.js';
 
 /** The LTRA lossy line `O a+ a- b+ b- model`. PSpice's `O` is a digital output and HSPICE has no `O`. */
-export default {
+const element: ElementType = {
   name: 'lossy transmission line',
   spellings: [
     { dialect: 'ngspice', letter: 'O' },
@@ -13,4 +13,6 @@ export default {
   forms: [{ terminals: LINE_PORTS, nodesEnd: 'count' }],
   tail: 'model',
   draw: { block: { title: { fixed: 'lossy line' } } }
-} satisfies ElementType;
+};
+
+export default element;

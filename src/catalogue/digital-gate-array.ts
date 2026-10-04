@@ -6,7 +6,7 @@ import { DIGITAL_SUPPLY } from './shared.js';
  * outputs; `XORA(g)`/`NXORA(g)` 2g inputs and g outputs; `ANDA(n,g)` and kin n·g inputs and g
  * outputs; `AO(n,g)`, `OA`, `AOI`, `OAI` n·g inputs into one output.
  */
-export default {
+const element: ElementType = {
   name: 'digital gate array',
   spellings: [
     {
@@ -43,4 +43,6 @@ export default {
   ],
   tail: 'model',
   draw: { block: { title: 'keyword-with-arguments' } }
-} satisfies ElementType;
+};
+
+export default element;

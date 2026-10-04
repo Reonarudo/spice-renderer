@@ -3,7 +3,7 @@ import { everySpiceDialect } from './shared.js';
  * `J d g s [b] model`: HSPICE and Spectre (`jfet (d g s [b])`) allow a fourth, bulk node. A block
  * until a JFET symbol exists; `njf`/`pjf` name the polarity in the title.
  */
-export default {
+const element = {
     name: 'JFET',
     spellings: [...everySpiceDialect('J'), { dialect: 'spectre', master: 'jfet' }],
     forms: [
@@ -20,3 +20,4 @@ export default {
     tail: 'model',
     draw: { block: { title: { fixed: 'JFET' }, polarity: { byModelType: { njf: 'N', pjf: 'P' } } } }
 };
+export default element;

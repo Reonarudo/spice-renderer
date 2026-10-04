@@ -7,7 +7,7 @@ const CLOCK = { name: 'CLK', side: 'left' };
  * `DFF(g)` d×g q×g qbar×g, `JKFF(g)` j×g k×g q×g qbar×g, and `DFFDE`/`JKFFDE` with positive- and
  * negative-edge enables (RG p.368). Xyce's `DFF`, `JKFF` and `TFF` are single (RG §2.3.28).
  */
-export default {
+const element = {
     name: 'digital flip-flop',
     spellings: [
         { dialect: 'pspice', letter: 'U', select: { by: 'keyword', keywords: ['DFF', 'JKFF', 'DFFDE', 'JKFFDE'] } },
@@ -83,3 +83,4 @@ export default {
     tail: 'model',
     draw: { block: { title: 'keyword-with-arguments' } }
 };
+export default element;

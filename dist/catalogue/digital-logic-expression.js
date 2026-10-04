@@ -1,6 +1,6 @@
 import { DIGITAL_SUPPLY } from './shared.js';
 /** PSpice's `LOGICEXP(i,o)`: i inputs, o outputs, then `LOGIC:` assignments (RG p.397). */
-export default {
+const element = {
     name: 'digital logic expression',
     spellings: [{ dialect: 'pspice', letter: 'U', select: { by: 'keyword', keywords: ['LOGICEXP'] } }],
     forms: [
@@ -13,3 +13,4 @@ export default {
     tail: 'model',
     draw: { block: { title: 'keyword-with-arguments' } }
 };
+export default element;

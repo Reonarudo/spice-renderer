@@ -4,7 +4,7 @@ import type { ElementType } from './types.js';
  * HSPICE's coupled lossy line `W in1 … inN refin out1 … outN refout N=n L=len …`, any number of
  * conductors, nodes and parameters possibly mixed (UG p.154–158). N comes from the `N=` pair.
  */
-export default {
+const element: ElementType = {
   name: 'coupled lossy line',
   spellings: [{ dialect: 'hspice', letter: 'W' }],
   forms: [
@@ -21,4 +21,6 @@ export default {
   ],
   tail: 'none',
   draw: { block: { title: { fixed: 'coupled line' } } }
-} satisfies ElementType;
+};
+
+export default element;

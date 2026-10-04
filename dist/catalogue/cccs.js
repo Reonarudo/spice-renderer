@@ -4,10 +4,11 @@ import { PLUS_MINUS, everySpiceDialect, spectreMasters } from './shared.js';
  * (`POLY(n)`, `value=`, HSPICE `PWL(1)`, `AND(k)`, `DELAY` included). Spectre `cccs (sink src)`
  * with `probe=`, and `pcccs`.
  */
-export default {
+const element = {
     name: 'CCCS',
     spellings: [...everySpiceDialect('F'), ...spectreMasters('cccs', 'pcccs')],
     forms: [{ terminals: PLUS_MINUS, nodesEnd: 'count' }],
     tail: 'value',
     draw: { block: { title: { fixed: 'CCCS' } } }
 };
+export default element;

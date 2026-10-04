@@ -5,10 +5,11 @@ import { everySpiceDialect } from './shared.js';
  * may be omitted from the right). In Spectre any master the catalogue does not name — a `subckt`,
  * an `inline subckt`, a Verilog-A module — is an instance of this type.
  */
-export default {
+const element = {
     name: 'subcircuit',
     spellings: [...everySpiceDialect('X'), { dialect: 'spectre', master: '*' }],
     forms: [{ terminals: [], nodesEnd: 'last-positional' }],
     tail: 'value',
     draw: { block: { title: 'master', pins: 'subcircuit-ports' } }
 };
+export default element;

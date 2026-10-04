@@ -1,7 +1,7 @@
 import type { ElementType } from './types.js';
 
 /** Spectre's ideal `transformer (t1 b1 t2 b2)` (REF03 p.667). */
-export default {
+const element: ElementType = {
   name: 'transformer',
   spellings: [{ dialect: 'spectre', master: 'transformer' }],
   forms: [
@@ -17,4 +17,6 @@ export default {
   ],
   tail: 'none',
   draw: { block: { title: { fixed: 'transformer' } } }
-} satisfies ElementType;
+};
+
+export default element;

@@ -5,10 +5,12 @@ import type { ElementType } from './types.js';
  * the model is the token before the first pair (M §9.3.1.5). Pins are numbered; the module name
  * titles the block.
  */
-export default {
+const element: ElementType = {
   name: 'Verilog-A device',
   spellings: [{ dialect: 'ngspice', letter: 'N' }],
   forms: [{ terminals: [], nodesEnd: 'last-positional' }],
   tail: 'model',
   draw: { block: { title: 'model-type', pins: 'numbered' } }
-} satisfies ElementType;
+};
+
+export default element;

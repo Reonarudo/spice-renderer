@@ -5,7 +5,7 @@ import { PLUS_MINUS } from './shared.js';
  * The arbitrary source `B n+ n- V=expr` or `I=expr` (ngspice M §5.1.1, LTspice, Xyce). LTspice's
  * `B … R=` is the resistor. PSpice's `B` is a GaAsFET and HSPICE's an IBIS buffer.
  */
-export default {
+const element: ElementType = {
   name: 'behavioural source',
   spellings: [
     { dialect: 'ngspice', letter: 'B' },
@@ -16,4 +16,6 @@ export default {
   forms: [{ terminals: PLUS_MINUS, nodesEnd: 'count' }],
   tail: 'value',
   draw: { block: { title: { fixed: 'B source' } } }
-} satisfies ElementType;
+};
+
+export default element;

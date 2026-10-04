@@ -1,5 +1,5 @@
 /** HSPICE's lumped lossy line `U in1 [… in5] refin out1 [… out5] refout model L=` (UG p.158–159). */
-export default {
+const element = {
     name: 'lumped lossy line',
     spellings: [{ dialect: 'hspice', letter: 'U' }],
     forms: [
@@ -17,3 +17,4 @@ export default {
     tail: 'model',
     draw: { block: { title: { fixed: 'lossy line' } } }
 };
+export default element;

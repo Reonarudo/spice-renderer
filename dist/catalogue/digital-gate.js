@@ -4,7 +4,7 @@ import { DIGITAL_SUPPLY } from './shared.js';
  * Xyce `U name TYPE[(n)] dpwr dgnd in… out model` (RG §2.3.28). `AND`, `NAND`, `OR` and `NOR`
  * take `(n)` inputs; the rest have fixed pins. The title is the type with its parentheses.
  */
-export default {
+const element = {
     name: 'digital gate',
     spellings: [
         { dialect: 'pspice', letter: 'U', select: { by: 'keyword', keywords: ['BUF', 'INV', 'AND', 'NAND', 'OR', 'NOR', 'XOR', 'NXOR'] } },
@@ -31,3 +31,4 @@ export default {
     tail: 'model',
     draw: { block: { title: 'keyword-with-arguments' } }
 };
+export default element;

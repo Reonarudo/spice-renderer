@@ -1,6 +1,6 @@
 import { DIGITAL_SUPPLY } from './shared.js';
 /** PSpice's programmable logic arrays `PLAND(i,o)` and kin, with true/complement `…C` variants: i inputs, o outputs (RG p.380–381). */
-export default {
+const element = {
     name: 'digital PLA',
     spellings: [
         {
@@ -19,3 +19,4 @@ export default {
     tail: 'model',
     draw: { block: { title: 'keyword-with-arguments' } }
 };
+export default element;

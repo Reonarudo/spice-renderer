@@ -8,7 +8,7 @@ import { everySpiceDialect, spectreMasters } from './shared.js';
  * BSIM6 and HiSIM2 are listed on the strength of their family, their terminal order being
  * unconfirmed in the public references.
  */
-export default {
+const element: ElementType = {
   name: 'MOSFET',
   spellings: [
     ...everySpiceDialect('M'),
@@ -34,4 +34,6 @@ export default {
       note: 'drawn as NMOS'
     }
   }
-} satisfies ElementType;
+};
+
+export default element;

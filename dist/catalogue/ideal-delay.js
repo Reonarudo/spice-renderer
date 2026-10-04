@@ -1,5 +1,5 @@
 /** Xyce's ideal delay `YDELAY name out+ out- in+ in- TD=` (RG §2.3.27). */
-export default {
+const element = {
     name: 'delay',
     spellings: [{ dialect: 'xyce', letter: 'Y', select: { by: 'suffix', suffixes: ['DELAY'] } }],
     forms: [
@@ -16,3 +16,4 @@ export default {
     tail: 'none',
     draw: { block: { title: { fixed: 'delay' } } }
 };
+export default element;

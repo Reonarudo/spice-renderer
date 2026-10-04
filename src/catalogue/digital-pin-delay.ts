@@ -2,7 +2,7 @@ import type { ElementType } from './types.js';
 import { DIGITAL_SUPPLY } from './shared.js';
 
 /** PSpice's `PINDLY(p,e,r)`: p inputs, e enables, r references, p outputs; only an I/O model (RG p.401–402). */
-export default {
+const element: ElementType = {
   name: 'digital pin delay',
   spellings: [{ dialect: 'pspice', letter: 'U', select: { by: 'keyword', keywords: ['PINDLY'] } }],
   forms: [
@@ -20,4 +20,6 @@ export default {
   ],
   tail: 'model',
   draw: { block: { title: 'keyword-with-arguments' } }
-} satisfies ElementType;
+};
+
+export default element;
