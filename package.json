@@ -1,6 +1,6 @@
 {
   "name": "@reonarudo/spice-renderer",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Draw SPICE netlists as safe, inline-ready SVG schematics in Node",
   "keywords": [
     "spice",
