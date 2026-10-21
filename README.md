@@ -7,11 +7,11 @@ it started as a copy of [SPICE Schematic Preview](https://github.com/Reonarudo/s
 and draws what that extension draws.
 
 ```sh
-npm install github:Reonarudo/spice-renderer#v0.1.0
+npm install https://github.com/Reonarudo/spice-renderer/releases/download/v1.0.0/reonarudo-spice-renderer-1.0.0.tgz
 ```
 
-On npm 12 or later, a project installing git dependencies also needs `allow-git=root` in its
-`.npmrc`. Nothing runs on install: `dist/` and the parsers are committed.
+On npm 12 or later, the installing project also needs `allow-remote=root` in its `.npmrc`.
+Nothing runs on install: `dist/` and the parsers are committed.
 
 ## Use
 
@@ -368,6 +368,7 @@ npm ci
 npm run lint            # tsc --noEmit
 npm run compile         # tsc → dist/ (plus the symbol file), which is committed; CI fails if it is stale
 npm test                # tests import dist/ and src/, so compile first
+UPDATE_GOLDEN=1 npm test  # re-record test/golden/ after a deliberate output change
 npm run test:packed     # npm pack, install into a temp project, render one fence with an include
 npm run readme:table    # regenerate the elements-by-dialect table in this file from src/catalogue/
 ```
@@ -375,6 +376,12 @@ npm run readme:table    # regenerate the elements-by-dialect table in this file 
 Requires Node 22 or later (`.nvmrc` pins the version used in development). Symbols live in
 `src/skin/symbols.svg`; `test/schematic.test.ts` traces every wire of a set of reference
 circuits and fails if a drawing connects the wrong pins.
+
+## Releasing
+
+Versions, golden SVG tests and the release procedure follow
+[Releasing](http://192.168.188.68:3001/projects/markdown-renderers/wiki/Releasing).
+What each version changed is in [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 

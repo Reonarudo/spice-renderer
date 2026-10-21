@@ -1,0 +1,56 @@
+<svg class="spice" viewBox="4 14 465 207" fill="none" stroke="#000" font-family="&quot;Courier New&quot;, Courier, monospace" font-size="10" font-weight="bold" xmlns="http://www.w3.org/2000/svg"><g transform="translate(12,32)">
+  <text x="37" y="20" fill="#000" stroke="none">VDD</text>
+  <text x="37" y="35" fill="#000" stroke="none">1.8</text>
+  <circle cx="16" cy="26" r="16" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M16,13 V21 M12,17 H20 M12,35 H20" class="connect" stroke-width="1" stroke-linecap="round"/>
+  <path d="M16,0 V10 M16,42 V52" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+  
+</g><g transform="translate(18,89)">
+  <path d="M0,15 H20 M3,20 H17 M7,25 H13 M10,15 V0" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+</g><g transform="translate(61,126)">
+  <text x="37" y="20" fill="#000" stroke="none">VIN</text>
+  <text x="37" y="35" fill="#000" stroke="none">PULSE(0 1.8 0 10p 10p 1…</text>
+  <circle cx="16" cy="26" r="16" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M16,13 V21 M12,17 H20 M12,35 H20" class="connect" stroke-width="1" stroke-linecap="round"/>
+  <path d="M16,0 V10 M16,42 V52" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+  
+</g><g transform="translate(67,183)">
+  <path d="M0,15 H20 M3,20 H17 M7,25 H13 M10,15 V0" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+</g><g transform="translate(263,32)">
+  <text x="30" y="10" fill="#000" stroke="none">M1</text>
+  <text x="30" y="36" fill="#000" stroke="none">pch W=2u L=180n</text>
+  <path d="M0,24 H7 M7,13 V27" class="connect" stroke-width="1" stroke-linecap="round"/>
+  <path d="M11,10 V16 M11,17 V23 M11,24 V30" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M11,13 H24 V0 M11,27 H24 V40 M11,20 H24 V13" class="connect" stroke-width="1" stroke-linecap="round"/>
+  <path d="M19,20 l-6,-3 v6 z" class="detail" fill="#000" stroke-linejoin="round"/>
+  
+  
+  
+</g><g transform="translate(263,92)">
+  <text x="30" y="10" fill="#000" stroke="none">M2</text>
+  <text x="30" y="36" fill="#000" stroke="none">nch W=1u L=180n</text>
+  <path d="M0,24 H7 M7,13 V27" class="connect" stroke-width="1" stroke-linecap="round"/>
+  <path d="M11,10 V16 M11,17 V23 M11,24 V30" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M11,13 H24 V0 M11,27 H24 V40 M11,20 H24 V27" class="connect" stroke-width="1" stroke-linecap="round"/>
+  <path d="M12,20 l6,-3 v6 z" class="detail" fill="#000" stroke-linejoin="round"/>
+  
+  
+  
+</g><g transform="translate(277,137)">
+  <path d="M0,15 H20 M3,20 H17 M7,25 H13 M10,15 V0" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+</g><g transform="translate(418,92)">
+  <text x="25" y="10" fill="#000" stroke="none">CL</text>
+  <text x="25" y="45" fill="#000" stroke="none">10f</text>
+  <path d="M0,20 H30 M0,30 H30" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M15,0 V20 M15,30 V50" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+  
+</g><g transform="translate(423,147)">
+  <path d="M0,15 H20 M3,20 H17 M7,25 H13 M10,15 V0" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+</g><path d="M28,22 L28,32" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M28,22 L287,22 L287,32" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M28,84 L28,89" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M263,56 L77,56 L77,126" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M263,116 L88,116 L88,116 L77,116 L77,126" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M77,178 L77,183" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M287,72 L287,92" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M287,72 L287,82 L433,82 L433,92" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M287,132 L287,137" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M433,142 L433,147" class="wire" stroke-width="1" stroke-linecap="round"/><circle cx="77" cy="116" r="2.5" class="junction" fill="#000" stroke-linejoin="round"/><circle cx="287" cy="82" r="2.5" class="junction" fill="#000" stroke-linejoin="round"/></svg>

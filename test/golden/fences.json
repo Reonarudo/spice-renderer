@@ -1,0 +1,60 @@
+[
+  {
+    "name": "site-01",
+    "lang": "spice",
+    "from": "Reonarudo.github.io/content/posts/diagram-fences/index.md:145",
+    "origin": "site"
+  },
+  {
+    "name": "site-02",
+    "lang": "spice",
+    "from": "Reonarudo.github.io/content/posts/diagram-fences/index.md:169",
+    "dialect": "spectre",
+    "origin": "site"
+  },
+  {
+    "name": "extension-01",
+    "lang": "spice",
+    "from": "spice-markdown-preview/examples/demo.md:5",
+    "origin": "extension"
+  },
+  {
+    "name": "extension-02",
+    "lang": "spice",
+    "from": "spice-markdown-preview/examples/demo.md:19",
+    "origin": "extension"
+  },
+  {
+    "name": "extension-03",
+    "lang": "spice",
+    "from": "spice-markdown-preview/examples/demo.md:31",
+    "origin": "extension"
+  },
+  {
+    "name": "extension-04",
+    "lang": "spice",
+    "from": "spice-markdown-preview/examples/demo.md:44",
+    "origin": "extension"
+  },
+  {
+    "name": "extension-05",
+    "lang": "spice",
+    "from": "spice-markdown-preview/examples/demo.md:51",
+    "dialect": "pspice",
+    "origin": "extension"
+  },
+  {
+    "name": "extension-06",
+    "lang": "spice",
+    "from": "spice-markdown-preview/examples/demo.md:58",
+    "dialect": "ltspice",
+    "origin": "extension"
+  },
+  {
+    "name": "extension-07",
+    "lang": "spice",
+    "from": "spice-markdown-preview/examples/demo.md:66",
+    "dialect": "spectre",
+    "origin": "extension"
+  }
+]

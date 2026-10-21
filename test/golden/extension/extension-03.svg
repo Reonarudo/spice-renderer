@@ -1,0 +1,51 @@
+<svg class="spice" viewBox="4 4 497 264" fill="none" stroke="#000" font-family="&quot;Courier New&quot;, Courier, monospace" font-size="10" font-weight="bold" xmlns="http://www.w3.org/2000/svg"><g transform="translate(12,32)">
+  <text x="37" y="20" fill="#000" stroke="none">V1</text>
+  <text x="37" y="35" fill="#000" stroke="none">SIN(0 0.1 1k)</text>
+  <circle cx="16" cy="26" r="16" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M16,13 V21 M12,17 H20 M12,35 H20" class="connect" stroke-width="1" stroke-linecap="round"/>
+  <path d="M16,0 V10 M16,42 V52" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+  
+</g><g transform="translate(18,89)">
+  <path d="M0,15 H20 M3,20 H17 M7,25 H13 M10,15 V0" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+</g><g transform="translate(162,48)">
+  <text x="15" y="15" fill="#000" stroke="none">R1</text>
+  <text x="15" y="30" fill="#000" stroke="none">10k</text>
+  <path d="M0,10 V40 H10 V10 Z" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M5,0 V10 M5,40 V50" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+  
+</g><g transform="translate(309,22)">
+  <text x="15" y="15" fill="#000" stroke="none">R2</text>
+  <text x="15" y="30" fill="#000" stroke="none">100k</text>
+  <path d="M0,10 V40 H10 V10 Z" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M5,0 V10 M5,40 V50" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+  
+</g><g transform="translate(248,90)"><rect x="0" y="0" width="56" height="78" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><text x="28" y="-4" class="nodelabel" fill="#000" stroke="none" text-anchor="middle">X1</text><text x="28" y="13" class="nodelabel title" fill="#000" stroke="none" text-anchor="middle" font-weight="normal">opamp</text><text x="4" y="31" class="pinlabel" fill="#000" stroke="none" font-weight="normal">inp</text><text x="4" y="51" class="pinlabel" fill="#000" stroke="none" font-weight="normal">inn</text><text x="4" y="71" class="pinlabel" fill="#000" stroke="none" font-weight="normal">vp</text><text x="52" y="31" class="pinlabel endlabel" fill="#000" stroke="none" text-anchor="end" font-weight="normal">vn</text><text x="52" y="51" class="pinlabel endlabel" fill="#000" stroke="none" text-anchor="end" font-weight="normal">out</text></g><g transform="translate(167,148)">
+  <path d="M0,15 H20 M3,20 H17 M7,25 H13 M10,15 V0" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+</g><g transform="translate(222,173)">
+  <text x="37" y="20" fill="#000" stroke="none">VCC</text>
+  <text x="37" y="35" fill="#000" stroke="none">15</text>
+  <circle cx="16" cy="26" r="16" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M16,13 V21 M12,17 H20 M12,35 H20" class="connect" stroke-width="1" stroke-linecap="round"/>
+  <path d="M16,0 V10 M16,42 V52" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+  
+</g><g transform="translate(228,230)">
+  <path d="M0,15 H20 M3,20 H17 M7,25 H13 M10,15 V0" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+</g><g transform="translate(383,56)">
+  <text x="37" y="20" fill="#000" stroke="none">VEE</text>
+  <text x="37" y="35" fill="#000" stroke="none">15</text>
+  <circle cx="16" cy="26" r="16" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M16,13 V21 M12,17 H20 M12,35 H20" class="connect" stroke-width="1" stroke-linecap="round"/>
+  <path d="M16,0 V10 M16,42 V52" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+  
+</g><g transform="translate(473,32)">
+  <path d="M0,15 H20 M3,20 H17 M7,25 H13 M10,15 V0" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+</g><path d="M28,22 L28,32" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M28,22 L167,22 L167,48" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M28,84 L28,89" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M167,98 L167,138 L248,138" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M248,138 L167,138 L167,108 L205,108 L205,12 L314,12 L314,22" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M314,72 L314,138 L304,138" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M248,118 L177,118 L177,148" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M248,158 L238,158 L238,173" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M399,108 L399,118 L304,118" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M238,225 L238,230" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M399,22 L483,22 L483,32" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M399,22 L399,56" class="wire" stroke-width="1" stroke-linecap="round"/><circle cx="167" cy="108" r="2.5" class="junction" fill="#000" stroke-linejoin="round"/></svg>

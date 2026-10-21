@@ -1,0 +1,8 @@
+V1 in 0 SIN(0 0.1 1k)
+R1 in inv 10k
+R2 inv out 100k
+X1 0 inv vcc vee out opamp
+VCC vcc 0 15
+VEE 0 vee 15
+.subckt opamp inp inn vp vn out
+.ends

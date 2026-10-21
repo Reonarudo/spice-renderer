@@ -1,0 +1,9 @@
+* RC low-pass driving an emitter follower
+V1 in 0 AC 1
+R1 in mid 10k
+C1 mid 0 100n
+Q1 vcc mid out 2N3904
+R2 out 0 1k
+VCC vcc 0 5
+.model 2N3904 NPN
+.tran 1u 1m

@@ -1,0 +1,5 @@
+V1 in 0 SIN(0 1 1k)
+R1 in n1 10k
+C1 n1 0 100n
+A1 n1 0 0 0 0 0 out 0 SCHMITT Vt=0.5 Vh=0.1
+RL out 0 10k

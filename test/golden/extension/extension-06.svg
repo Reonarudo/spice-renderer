@@ -1,0 +1,42 @@
+<svg class="spice" viewBox="4 14 292 251" fill="none" stroke="#000" font-family="&quot;Courier New&quot;, Courier, monospace" font-size="10" font-weight="bold" xmlns="http://www.w3.org/2000/svg"><g transform="translate(185,32)">
+  <text x="37" y="20" fill="#000" stroke="none">V1</text>
+  <text x="37" y="35" fill="#000" stroke="none">SIN(0 1 1k)</text>
+  <circle cx="16" cy="26" r="16" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M16,13 V21 M12,17 H20 M12,35 H20" class="connect" stroke-width="1" stroke-linecap="round"/>
+  <path d="M16,0 V10 M16,42 V52" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+  
+</g><g transform="translate(191,89)">
+  <path d="M0,15 H20 M3,20 H17 M7,25 H13 M10,15 V0" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+</g><g transform="translate(22,32)">
+  <text x="15" y="15" fill="#000" stroke="none">R1</text>
+  <text x="15" y="30" fill="#000" stroke="none">10k</text>
+  <path d="M0,10 V40 H10 V10 Z" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M5,0 V10 M5,40 V50" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+  
+</g><g transform="translate(12,172)">
+  <text x="25" y="10" fill="#000" stroke="none">C1</text>
+  <text x="25" y="45" fill="#000" stroke="none">100n</text>
+  <path d="M0,20 H30 M0,30 H30" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M15,0 V20 M15,30 V50" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+  
+</g><g transform="translate(17,227)">
+  <path d="M0,15 H20 M3,20 H17 M7,25 H13 M10,15 V0" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+</g><g transform="translate(37,100)"><rect x="0" y="0" width="104" height="52" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><text x="52" y="-4" class="nodelabel" fill="#000" stroke="none" text-anchor="middle">A1</text><text x="0" y="64" class="" fill="#000" stroke="none">Vt=0.5 Vh=0.1</text><text x="52" y="13" class="nodelabel title" fill="#000" stroke="none" text-anchor="middle" font-weight="normal">SCHMITT</text><text x="94" y="48" class="pinlabel nodelabel" fill="#000" stroke="none" text-anchor="middle" font-weight="normal">8</text><text x="4" y="31" class="pinlabel" fill="#000" stroke="none" font-weight="normal">1</text><text x="100" y="31" class="pinlabel endlabel" fill="#000" stroke="none" text-anchor="end" font-weight="normal">7</text></g><g transform="translate(121,172)">
+  <path d="M0,15 H20 M3,20 H17 M7,25 H13 M10,15 V0" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+</g><g transform="translate(176,138)">
+  <text x="15" y="15" fill="#000" stroke="none">RL</text>
+  <text x="15" y="30" fill="#000" stroke="none">10k</text>
+  <path d="M0,10 V40 H10 V10 Z" class="symbol" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M5,0 V10 M5,40 V50" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+  
+</g><g transform="translate(171,193)">
+  <path d="M0,15 H20 M3,20 H17 M7,25 H13 M10,15 V0" class="connect" stroke-width="1" stroke-linecap="round"/>
+  
+</g><path d="M27,22 L201,22 L201,32" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M27,22 L27,32" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M201,84 L201,89" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M27,82 L27,128 L37,128" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M37,128 L27,128 L27,172" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M27,222 L27,227" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M141,128 L181,128 L181,138" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M131,152 L131,167 L131,172" class="wire" stroke-width="1" stroke-linecap="round"/><path d="M181,188 L181,193" class="wire" stroke-width="1" stroke-linecap="round"/><circle cx="27" cy="128" r="2.5" class="junction" fill="#000" stroke-linejoin="round"/></svg>

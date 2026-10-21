@@ -1,0 +1,4 @@
+U1 NAND(2) $G_DPWR $G_DGND set qb q D_00 IO_STD
+U2 NAND(2) $G_DPWR $G_DGND rst q qb D_00 IO_STD
+U_SET STIM(1,1) $G_DPWR $G_DGND set IO_STM 0s 1 10ns 0 20ns 1
+U_RST STIM(1,1) $G_DPWR $G_DGND rst IO_STM 0s 1 30ns 0 40ns 1
