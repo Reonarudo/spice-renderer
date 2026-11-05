@@ -7,7 +7,7 @@ it started as a copy of [SPICE Schematic Preview](https://github.com/Reonarudo/s
 and draws what that extension draws.
 
 ```sh
-npm install https://github.com/Reonarudo/spice-renderer/releases/download/v1.0.0/reonarudo-spice-renderer-1.0.0.tgz
+npm install https://github.com/Reonarudo/spice-renderer/releases/download/v1.1.0/reonarudo-spice-renderer-1.1.0.tgz
 ```
 
 On npm 12 or later, the installing project also needs `allow-remote=root` in its `.npmrc`.
@@ -31,9 +31,9 @@ dialect, finds every file it includes — and the files those include — reads 
 
 | `status` | Fields | When |
 | --- | --- | --- |
-| `success` | `output`, `notes` | `output` is one `<svg class="spice" viewBox="…">` with no size, ready to inline; `notes` holds what the netlist reader skipped or assumed, as plain text |
-| `failure` | `message`, `line?`, `column?` | a netlist error (plain text, 1-based, fence-relative), a preparation failure, or an exceeded limit |
-| `timeout` | `budget` | the layout ran past `timeout` milliseconds |
+| `success` | `output`, `bom`, `notes` | `output` is one `<svg class="spice" viewBox="…">` with no size, ready to inline; `bom` is the fence's parts aggregated into rows (see *The BOM rows*); `notes` holds what the netlist reader skipped or assumed, as plain text |
+| `failure` | `message`, `line?`, `column?`, `bom?`, `notes?` | a netlist error (plain text, 1-based, fence-relative), a preparation failure, or an exceeded limit; `bom` and `notes` are present when the netlist was read and only the layout or the output failed |
+| `timeout` | `budget`, `bom?`, `notes?` | the layout ran past `timeout` milliseconds; `bom` and `notes` are present when the netlist was read before the budget expired |
 | `unavailable` | `reason` | the layout worker could not start |
 
 `render` throws only for programmer errors: input that `prepare` did not return, or a call
@@ -104,6 +104,100 @@ used are kept for that: `wire`, `junction`, `symbol`, `connect`, `detail`, and o
 `nodelabel`, `endlabel`, `title`, `pinlabel`. A schematic is as wide as its circuit; scale it
 with CSS (`max-width: 100%; height: auto`). The extension's white card, padding and rounded
 corners are presentation and stay with the consumer.
+
+## The BOM rows
+
+`bom` is the fence's parts aggregated into a bill of materials: one row per group of identical
+parts, in the order of each row's first part. Every row is
+
+```ts
+interface BomRow {
+  type: string;        // the catalogue element type id, e.g. `bjt`: a stable key for styling and tests
+  name: string;        // the catalogue's display name, e.g. `bipolar transistor`
+  title?: string;      // the block title when the part has one: a subcircuit name, or `VCVS`
+  value: string;       // the value tail as the row's first part wrote it; may be empty
+  references: { ref: string; line: number; file?: string }[];   // in netlist order; never empty
+}
+```
+
+and the quantity is `references.length`. The rows mirror the parts the schematic draws: elements
+inside `.subckt` bodies are not parts, mutual inductance `K` is a note, and whatever a dot command
+skips is skipped here too.
+
+Two parts share a row when their type, title and value tail are equal after case folding and
+whitespace collapsing — and nothing else. `10K` and `10k` merge; `1e4` and `10k` do not; parameters
+stay in the tail, so `10k tc1=0.01` and `10k` are two rows; a multiplier stays in the tail and does
+not count toward the quantity, so `R1 … 1k m=2` and `R2 … 1k` are two rows with `m=2` visible in
+the value (every dialect defines `m=` as a real scale factor on the model, which a count cannot
+honour). A subcircuit's title enters the key because its name is not in the tail; a part from an
+included file joins a fence part's row, and its reference names the file.
+
+Four diodes aggregate into one row:
+
+```spice
+VAC ac1 ac2 SIN(0 12 50)
+D1 ac1 plus 1N4007
+D2 ac2 plus 1N4007
+D3 0 ac1 1N4007
+D4 0 ac2 1N4007
+C1 plus 0 1000u
+RL plus 0 1k
+.model 1N4007 D
+```
+
+| Qty | References | Type | Value |
+| --: | --- | --- | --- |
+| 1 | VAC | voltage source | SIN(0 12 50) |
+| 4 | D1, D2, D3, D4 | diode | 1N4007 |
+| 1 | C1 | capacitor | 1000u |
+| 1 | RL | resistor | 1k |
+
+A later part joining an earlier row does not move the row (`C2` joins `C1`'s row at `C1`'s position);
+a subcircuit instance's row shows its title as the value, and the `E1` inside the body is no row:
+
+```spice
+V1 in 0 SIN(0 1 1k)
+X1 in mid vcc vee mid opamp
+R1 mid inv 10k
+R2 inv out 47k
+X2 mid inv vcc vee out opamp
+RL out 0 10k
+VCC vcc 0 15
+VEE 0 vee 15
+.subckt opamp inp inn vp vn out
+E1 out 0 inp inn 100k
+.ends
+```
+
+| Qty | References | Type | Value |
+| --: | --- | --- | --- |
+| 1 | V1 | voltage source | SIN(0 1 1k) |
+| 2 | X1, X2 | subcircuit | opamp |
+| 2 | R1, RL | resistor | 10k |
+| 1 | R2 | resistor | 47k |
+| 2 | VCC, VEE | voltage source | 15 |
+
+With `included/stage.cir` holding `R7 c out 4k7`, the include is reached first, so its row comes
+first and its reference carries `file: 'included/stage.cir'`; `m=2` keeps `R1` and `R2` apart:
+
+```spice
+.include "included/stage.cir"
+X1 inp inn vcc vee out LM358
+R1 out fb 1k m=2
+R2 fb 0 1k
+```
+
+| Qty | References | Type | Value | File |
+| --: | --- | --- | --- | --- |
+| 1 | R7 | resistor | 4k7 | included/stage.cir |
+| 1 | X1 | subcircuit | LM358 | |
+| 1 | R1 | resistor | 1k m=2 | |
+| 1 | R2 | resistor | 1k | |
+
+The rows are computed before the layout starts and written to the shared buffer at once, so a fence
+whose layout times out still returns them: a `timeout` or a layout `failure` carries `bom` and
+`notes` whenever the netlist was read ([ADR 0001](docs/adr/0001-two-phase-reply.md)). Nothing in a
+row is markup; a consumer escapes `ref`, `value`, `title` and `file` as it escapes `notes`.
 
 ## What is drawn
 

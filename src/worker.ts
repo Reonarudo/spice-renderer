@@ -6,7 +6,7 @@ import { loadSymbols } from './schematic.js';
 import { renderNetlist } from './draw-netlist.js';
 import { parserLoader } from './parser/modules.js';
 import type { IncludeSet } from './netlist.js';
-import { ENGINE, FAILED, HEADER, LENGTH, READY, STARTED, type Reply, type Request } from './protocol.js';
+import { ENGINE, FAILED, HEADER, LENGTH, PARSED, READY, STARTED, type Parsed, type Reply, type Request } from './protocol.js';
 
 const { buffer } = workerData as { buffer: SharedArrayBuffer };
 const state = new Int32Array(buffer, 0, HEADER / 4);
@@ -18,6 +18,21 @@ function write(text: string): number {
   bytes.set(encoded);
   Atomics.store(state, LENGTH, encoded.length);
   return encoded.length;
+}
+
+/**
+ * The parsed stage (docs/adr/0001): rows and notes at the tail of the data region, before layout begins,
+ * so a worker the host terminates mid-layout still leaves them behind. Written only when it fits
+ * the slack the host reserves beyond twice the output limit; otherwise `PARSED` stays 0.
+ */
+let stage: Parsed | undefined;
+function writeParsed(parsed: Parsed, outputBytes: number): void {
+  stage = parsed;
+  const encoded = new TextEncoder().encode(JSON.stringify(parsed));
+  const slack = bytes.length - 2 * outputBytes;
+  if (encoded.length > slack) return;
+  bytes.set(encoded, bytes.length - encoded.length);
+  Atomics.store(state, PARSED, encoded.length);
 }
 
 function reply(result: Reply): void {
@@ -53,13 +68,14 @@ async function start(): Promise<(request: Request) => Promise<Reply>> {
     const includes: IncludeSet = {
       files: Object.fromEntries(files.map((file) => [file.key, 'text' in file ? file.text : { error: file.error }]))
     };
-    const result = await renderNetlist(source, symbols, layout, includes, dialect);
+    stage = undefined;
+    const result = await renderNetlist(source, symbols, layout, includes, dialect, (parsed) => writeParsed(parsed, outputBytes));
     if (result.status === 'failure') {
       // The netlist reader counts columns from 0; the contract counts them from 1.
       return result.column === undefined ? result : { ...result, column: result.column + 1 };
     }
     if (result.status === 'success' && Buffer.byteLength(result.output) > outputBytes) {
-      return { status: 'failure', message: `SPICE output exceeds the ${outputBytes}-byte limit` };
+      return { status: 'failure', message: `SPICE output exceeds the ${outputBytes}-byte limit`, ...(stage ?? {}) };
     }
     return result;
   };
@@ -75,7 +91,8 @@ start().then((render) => {
   parentPort!.on('message', (request: Request) => {
     render(request).then(reply, () => {
       // An unexpected error may leave a parser's wasm instance unusable; the host discards this worker.
-      reply({ status: 'failure', message: 'the SPICE renderer stopped unexpectedly', discard: true });
+      // The parsed stage, when it was reached, rides along: the host never reads the tail for a failure.
+      reply({ status: 'failure', message: 'the SPICE renderer stopped unexpectedly', discard: true, ...(stage ?? {}) });
     });
   });
   Atomics.store(state, ENGINE, STARTED);

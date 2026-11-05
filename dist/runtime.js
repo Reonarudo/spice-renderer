@@ -1,6 +1,6 @@
 import { Worker } from 'node:worker_threads';
 import { publicDialect } from './dialect.js';
-import { ENGINE, FAILED, HEADER, LENGTH, READY, STARTED, STARTING } from './protocol.js';
+import { ENGINE, FAILED, HEADER, LENGTH, PARSED, READY, STARTED, STARTING } from './protocol.js';
 /** Whether a value has the shape `prepare` gives, so the worker is never handed anything else. */
 function isPrepared(input) {
     if (typeof input !== 'object' || input === null)
@@ -75,6 +75,16 @@ export async function createRuntime(options = {}) {
         worker = undefined;
     };
     const payload = () => new TextDecoder().decode(bytes.slice(0, Atomics.load(state, LENGTH)));
+    /**
+     * The parsed stage, read only once the worker is terminated (docs/adr/0001): the rows and notes it
+     * wrote at the tail of the data region before layout began, or nothing when it never got there.
+     */
+    const parsed = () => {
+        const length = Atomics.load(state, PARSED);
+        if (length === 0)
+            return undefined;
+        return JSON.parse(new TextDecoder().decode(bytes.slice(bytes.length - length)));
+    };
     // Start the first worker now, so the first fence does not wait for ELK to load. Not fatal if
     // it fails: the next render starts a fresh one.
     spawn();
@@ -115,6 +125,7 @@ export async function createRuntime(options = {}) {
                 return { status: 'unavailable', reason: why };
             }
             Atomics.store(state, READY, 0);
+            Atomics.store(state, PARSED, 0);
             const request = {
                 source,
                 dialect: input.dialect,
@@ -124,7 +135,8 @@ export async function createRuntime(options = {}) {
             worker.postMessage(request);
             if (Atomics.wait(state, READY, 0, timeout) === 'timed-out') {
                 stop();
-                return { status: 'timeout', budget: timeout };
+                const early = parsed();
+                return early ? { status: 'timeout', budget: timeout, ...early } : { status: 'timeout', budget: timeout };
             }
             const { discard, ...result } = JSON.parse(payload());
             if (discard)

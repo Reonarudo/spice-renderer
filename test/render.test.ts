@@ -162,7 +162,9 @@ test('a source one character over sourceChars fails naming the limit; one at the
 test('an output over outputBytes fails naming the limit', async () => {
   const small = await createRuntime({ limits: { outputBytes: 500 } });
   try {
-    assert.deepEqual(await render(FENCES.ngspice!, undefined, small), { status: 'failure', message: 'SPICE output exceeds the 500-byte limit' });
+    const result = await render(FENCES.ngspice!, undefined, small);
+    assert.equal(result.status, 'failure');
+    assert.equal(result.status === 'failure' && result.message, 'SPICE output exceeds the 500-byte limit');
   } finally {
     await small.dispose();
   }
@@ -173,7 +175,9 @@ test('a runaway layout times out within its budget, and the next render on the r
   try {
     const prepared = await prepare(mesh);
     let started = Date.now();
-    assert.deepEqual(quick.render(prepared), { status: 'timeout', budget: 200 });
+    const result = quick.render(prepared);
+    assert.equal(result.status, 'timeout');
+    assert.equal(result.status === 'timeout' && result.budget, 200);
     assert.ok(Date.now() - started < 1200, `timed out after ${Date.now() - started} ms`);
     // The replacement worker loads ELK and draws its warm-up, which takes longer than 200 ms;
     // none of it is charged to this render's budget.

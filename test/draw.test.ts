@@ -71,9 +71,27 @@ test('notes from the reader come back with a successful drawing', async () => {
   assert.deepEqual(result.status === 'success' && result.notes, ['Line 2: .include x.lib is not read: no files are available here.']);
 });
 
-test('a layout failure is a failure with a plain message, never an exception', async () => {
+test('a layout failure is a failure with a plain message, never an exception; it keeps the rows and notes', async () => {
   const result = await renderNetlist('R1 a 0 1k', symbols, () => Promise.reject(new Error('java.lang.NullPointerException')));
-  assert.deepEqual(result, { status: 'failure', message: 'The schematic could not be laid out (java.lang.NullPointerException).' });
+  assert.deepEqual(result, {
+    status: 'failure', message: 'The schematic could not be laid out (java.lang.NullPointerException).',
+    bom: [{ type: 'resistor', name: 'resistor', value: '1k', references: [{ ref: 'R1', line: 1 }] }], notes: []
+  });
+});
+
+test('onParsed fires once, after the reader and before layout, with the rows and notes', async () => {
+  const calls: unknown[] = [];
+  const result = await renderNetlist('R1 a 0 1k\nK1 L1 L2 0.9\nL1 a 0 1m\nL2 b 0 1m', symbols, (graph) => { calls.push('layout'); return layout(graph); }, undefined, 'ngspice', (parsed) => calls.push(parsed));
+  assert.equal(result.status, 'success');
+  assert.deepEqual(calls, [
+    { bom: [
+      { type: 'resistor', name: 'resistor', value: '1k', references: [{ ref: 'R1', line: 1 }] },
+      { type: 'inductor', name: 'inductor', value: '1m', references: [{ ref: 'L1', line: 3 }, { ref: 'L2', line: 4 }] }
+    ], notes: ['Line 2: mutual inductance K1 (L1 L2 0.9) is not drawn.'] },
+    'layout'
+  ]);
+  assert.deepEqual(await renderNetlist('R1 a b', symbols, layout, undefined, 'ngspice', (parsed) => calls.push(parsed)).then((r) => r.status), 'failure');
+  assert.equal(calls.length, 2, 'a parse failure never fires onParsed');
 });
 
 test('renderNetlist takes the dialect as an optional trailing argument, and ngspice is the default', async () => {

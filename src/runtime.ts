@@ -1,7 +1,8 @@
 import { Worker } from 'node:worker_threads';
 import type { Prepared } from './prepare.js';
 import { publicDialect } from './dialect.js';
-import { ENGINE, FAILED, HEADER, LENGTH, READY, STARTED, STARTING, type Reply, type Request } from './protocol.js';
+import type { BomRow } from './bom.js';
+import { ENGINE, FAILED, HEADER, LENGTH, PARSED, READY, STARTED, STARTING, type Parsed, type Reply, type Request } from './protocol.js';
 
 export interface RuntimeOptions {
   /** Milliseconds per render; default 3000. */
@@ -19,10 +20,16 @@ export interface RuntimeOptions {
 /** The render input is what `prepare` returns for the fence. */
 export type RenderInput = Prepared;
 
+/**
+ * `bom` holds the fence's parts aggregated into rows (see `BomRow`), `notes` what the netlist
+ * reader skipped or assumed. On `failure` and `timeout` the two are present together — the netlist
+ * was read, the layout was not finished — or absent together: a netlist error, a timeout inside the
+ * reader, or an early payload too large for the buffer's slack (docs/adr/0001).
+ */
 export type RenderResult =
-  | { status: 'success'; output: string; notes: string[] }
-  | { status: 'failure'; message: string; line?: number; column?: number }
-  | { status: 'timeout'; budget: number }
+  | { status: 'success'; output: string; bom: BomRow[]; notes: string[] }
+  | { status: 'failure'; message: string; line?: number; column?: number; bom?: BomRow[]; notes?: string[] }
+  | { status: 'timeout'; budget: number; bom?: BomRow[]; notes?: string[] }
   | { status: 'unavailable'; reason: string };
 
 export interface Runtime {
@@ -106,6 +113,15 @@ export async function createRuntime(options: RuntimeOptions = {}): Promise<Runti
   };
   const payload = (): string =>
     new TextDecoder().decode(bytes.slice(0, Atomics.load(state, LENGTH)));
+  /**
+   * The parsed stage, read only once the worker is terminated (docs/adr/0001): the rows and notes it
+   * wrote at the tail of the data region before layout began, or nothing when it never got there.
+   */
+  const parsed = (): Parsed | undefined => {
+    const length = Atomics.load(state, PARSED);
+    if (length === 0) return undefined;
+    return JSON.parse(new TextDecoder().decode(bytes.slice(bytes.length - length))) as Parsed;
+  };
 
   // Start the first worker now, so the first fence does not wait for ELK to load. Not fatal if
   // it fails: the next render starts a fresh one.
@@ -145,6 +161,7 @@ export async function createRuntime(options: RuntimeOptions = {}): Promise<Runti
       }
 
       Atomics.store(state, READY, 0);
+      Atomics.store(state, PARSED, 0);
       const request: Request = {
         source,
         dialect: input.dialect,
@@ -154,7 +171,8 @@ export async function createRuntime(options: RuntimeOptions = {}): Promise<Runti
       worker!.postMessage(request);
       if (Atomics.wait(state, READY, 0, timeout) === 'timed-out') {
         stop();
-        return { status: 'timeout', budget: timeout };
+        const early = parsed();
+        return early ? { status: 'timeout', budget: timeout, ...early } : { status: 'timeout', budget: timeout };
       }
       const { discard, ...result } = JSON.parse(payload()) as Reply;
       if (discard) stop();

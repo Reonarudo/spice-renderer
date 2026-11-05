@@ -1,4 +1,5 @@
 import type { Prepared } from './prepare.js';
+import type { BomRow } from './bom.js';
 export interface RuntimeOptions {
     /** Milliseconds per render; default 3000. */
     timeout?: number;
@@ -13,18 +14,29 @@ export interface RuntimeOptions {
 }
 /** The render input is what `prepare` returns for the fence. */
 export type RenderInput = Prepared;
+/**
+ * `bom` holds the fence's parts aggregated into rows (see `BomRow`), `notes` what the netlist
+ * reader skipped or assumed. On `failure` and `timeout` the two are present together — the netlist
+ * was read, the layout was not finished — or absent together: a netlist error, a timeout inside the
+ * reader, or an early payload too large for the buffer's slack (docs/adr/0001).
+ */
 export type RenderResult = {
     status: 'success';
     output: string;
+    bom: BomRow[];
     notes: string[];
 } | {
     status: 'failure';
     message: string;
     line?: number;
     column?: number;
+    bom?: BomRow[];
+    notes?: string[];
 } | {
     status: 'timeout';
     budget: number;
+    bom?: BomRow[];
+    notes?: string[];
 } | {
     status: 'unavailable';
     reason: string;
