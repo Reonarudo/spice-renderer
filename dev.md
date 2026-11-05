@@ -46,6 +46,6 @@ diagnostic), because the WebAssembly build will. The vendored module is still re
 
 What the base grammar does, and the ngspice overlay on top of it, is written up in ADR 0008
 (*As built*) on the SPICE Schematic Preview wiki — the ADR numbers in comments copied from
-the extension (0001–0009) refer to its records, while ADR 0002 in `src/prepare.ts` and
+the extension (0001–0009) refer to its records, the ones in `docs/adr/` (from 0001, the two-phase reply) are this repository's own and are cited by path (`docs/adr/0001`), while ADR 0002 in `src/prepare.ts` and
 `src/fileReader.ts` is the Markdown Renderers project's; `test/parser-ngspice.test.ts` is the executable version, one case per
 finding of the ngspice research plus the real decks under `test/fixtures/ngspice/corpus/`.

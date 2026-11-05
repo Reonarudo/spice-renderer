@@ -12,9 +12,14 @@ const { buffer } = workerData as { buffer: SharedArrayBuffer };
 const state = new Int32Array(buffer, 0, HEADER / 4);
 const bytes = new Uint8Array(buffer, HEADER);
 
-function write(text: string): number {
+/**
+ * Write the final reply at the head of the data region. It never reaches into the parsed stage at
+ * the tail: a host that has timed out may be reading the tail while this worker, not yet stopped by
+ * `terminate`, finishes its layout and replies (docs/adr/0001).
+ */
+function write(text: string, room = bytes.length - Atomics.load(state, PARSED)): number {
   const encoded = new TextEncoder().encode(text);
-  if (encoded.length > bytes.length) throw new RangeError('reply exceeds the shared buffer');
+  if (encoded.length > room) throw new RangeError('reply exceeds the shared buffer');
   bytes.set(encoded);
   Atomics.store(state, LENGTH, encoded.length);
   return encoded.length;
@@ -25,9 +30,10 @@ function write(text: string): number {
  * so a worker the host terminates mid-layout still leaves them behind. Written only when it fits
  * the slack the host reserves beyond twice the output limit; otherwise `PARSED` stays 0.
  */
-let stage: Parsed | undefined;
+/** The current request's parsed stage, kept even when it did not fit the tail: every later failure carries it inline. */
+let lastParsed: Parsed | undefined;
 function writeParsed(parsed: Parsed, outputBytes: number): void {
-  stage = parsed;
+  lastParsed = parsed;
   const encoded = new TextEncoder().encode(JSON.stringify(parsed));
   const slack = bytes.length - 2 * outputBytes;
   if (encoded.length > slack) return;
@@ -36,10 +42,16 @@ function writeParsed(parsed: Parsed, outputBytes: number): void {
 }
 
 function reply(result: Reply): void {
+  const tooLarge = { status: 'failure', message: 'the schematic is too large to return' } satisfies Reply;
   try {
     write(JSON.stringify(result));
   } catch {
-    write(JSON.stringify({ status: 'failure', message: 'the schematic is too large to return' } satisfies Reply));
+    try {
+      write(JSON.stringify({ ...tooLarge, ...(lastParsed ?? {}) } satisfies Reply));
+    } catch {
+      // Only an output limit of a few bytes leaves no room beside the tail for the plain message.
+      write(JSON.stringify(tooLarge), bytes.length);
+    }
   }
   Atomics.store(state, READY, 1);
   Atomics.notify(state, READY);
@@ -68,14 +80,14 @@ async function start(): Promise<(request: Request) => Promise<Reply>> {
     const includes: IncludeSet = {
       files: Object.fromEntries(files.map((file) => [file.key, 'text' in file ? file.text : { error: file.error }]))
     };
-    stage = undefined;
+    lastParsed = undefined;
     const result = await renderNetlist(source, symbols, layout, includes, dialect, (parsed) => writeParsed(parsed, outputBytes));
     if (result.status === 'failure') {
       // The netlist reader counts columns from 0; the contract counts them from 1.
       return result.column === undefined ? result : { ...result, column: result.column + 1 };
     }
     if (result.status === 'success' && Buffer.byteLength(result.output) > outputBytes) {
-      return { status: 'failure', message: `SPICE output exceeds the ${outputBytes}-byte limit`, ...(stage ?? {}) };
+      return { status: 'failure', message: `SPICE output exceeds the ${outputBytes}-byte limit`, ...(lastParsed ?? {}) };
     }
     return result;
   };
@@ -92,7 +104,7 @@ start().then((render) => {
     render(request).then(reply, () => {
       // An unexpected error may leave a parser's wasm instance unusable; the host discards this worker.
       // The parsed stage, when it was reached, rides along: the host never reads the tail for a failure.
-      reply({ status: 'failure', message: 'the SPICE renderer stopped unexpectedly', discard: true, ...(stage ?? {}) });
+      reply({ status: 'failure', message: 'the SPICE renderer stopped unexpectedly', discard: true, ...(lastParsed ?? {}) });
     });
   });
   Atomics.store(state, ENGINE, STARTED);

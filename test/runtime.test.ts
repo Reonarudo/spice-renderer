@@ -1,4 +1,4 @@
-/** The two-phase reply (ADR 0001): where `bom` and `notes` are present on each status, and why. */
+/** The two-phase reply (docs/adr/0001): where `bom` and `notes` are present on each status, and why. */
 import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { createRuntime, prepare, type BomRow, type RenderResult, type Runtime } from '../dist/index.js';
@@ -27,7 +27,7 @@ test('success carries the rows and the notes beside the SVG', async () => {
   const result = await render(BRIDGE);
   assert.equal(result.status, 'success');
   if (result.status !== 'success') return;
-  assert.deepEqual(result.bom.map((row) => [row.references.length, row.references.map((r) => r.ref).join(', '), row.name, row.value]), [
+  assert.deepEqual(result.bom.map((row) => [row.references.length, row.references.map((reference) => reference.ref).join(', '), row.name, row.value]), [
     [1, 'VAC', 'voltage source', 'SIN(0 12 50)'],
     [4, 'D1, D2, D3, D4', 'diode', '1N4007'],
     [1, 'C1', 'capacitor', '1000u'],
@@ -50,7 +50,7 @@ test('a failure after the parsed stage (the output limit) carries both, inline',
     assert.equal(result.status, 'failure');
     if (result.status !== 'failure') return;
     assert.equal(result.message, 'SPICE output exceeds the 500-byte limit');
-    assert.deepEqual(result.bom?.map((row) => row.references.map((r) => r.ref)), [['R1'], ['L1', 'L2']]);
+    assert.deepEqual(result.bom?.map((row) => row.references.map((reference) => reference.ref)), [['R1'], ['L1', 'L2']]);
     assert.deepEqual(result.notes, ['Line 2: mutual inductance K1 (L1 L2 0.9) is not drawn.']);
   } finally {
     await small.dispose();

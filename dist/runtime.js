@@ -42,8 +42,9 @@ export async function createRuntime(options = {}) {
     const startupTimeout = option(options.startupTimeout, 'startupTimeout', 10000);
     const sourceChars = option(options.limits?.sourceChars, 'limits.sourceChars', 64000);
     const outputBytes = option(options.limits?.outputBytes, 'limits.outputBytes', 4 * 1024 * 1024);
-    // JSON at most doubles the SVG (quotes escape to two bytes); the slack holds the envelope,
-    // the notes and a failure message.
+    // JSON at most doubles the SVG (quotes escape to two bytes); the slack holds the envelope, the
+    // notes, the BOM rows inline and a failure message — and the parsed stage at the tail, which a
+    // reply never overwrites (docs/adr/0001).
     const capacity = 2 * outputBytes + 262144;
     let worker;
     let state;
@@ -76,8 +77,9 @@ export async function createRuntime(options = {}) {
     };
     const payload = () => new TextDecoder().decode(bytes.slice(0, Atomics.load(state, LENGTH)));
     /**
-     * The parsed stage, read only once the worker is terminated (docs/adr/0001): the rows and notes it
-     * wrote at the tail of the data region before layout began, or nothing when it never got there.
+     * The parsed stage, read only after the timeout has stopped the worker (docs/adr/0001): the rows
+     * and notes it wrote at the tail of the data region before layout began, or nothing when it never
+     * got there. A worker still finishing until `terminate` takes hold cannot overwrite the tail.
      */
     const parsed = () => {
         const length = Atomics.load(state, PARSED);

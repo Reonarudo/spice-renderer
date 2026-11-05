@@ -62,8 +62,10 @@ So the guard never trips on an input the runtime accepts; it protects a future c
   when the netlist was read, absent when it was not (a parse error, a timeout inside the reader).
   `notes` moves from the success-only envelope to the parsed stage, so a timed-out fence keeps its
   notes too.
-- The host reads the tail only after terminating the worker, and the worker writes the tail only
-  before layout, so the two never touch the tail concurrently. The `PARSED` store follows the bytes,
+- The host reads the tail only after stopping the worker, and the worker writes the tail only
+  before layout. `terminate` is asynchronous, so a worker may still finish its layout and reply
+  while the host reads the tail: the reply is therefore bounded to the region before the tail, and
+  one that does not fit becomes *the schematic is too large to return*, carrying the parsed stage. The `PARSED` store follows the bytes,
   so a non-zero length always covers complete bytes.
 - A terminate is asynchronous: a worker that is mid-parse when the host's budget expires may still
   finish its early write after the host has read `PARSED`. The host then reports a timeout without

@@ -90,7 +90,7 @@ test('onParsed fires once, after the reader and before layout, with the rows and
     ], notes: ['Line 2: mutual inductance K1 (L1 L2 0.9) is not drawn.'] },
     'layout'
   ]);
-  assert.deepEqual(await renderNetlist('R1 a b', symbols, layout, undefined, 'ngspice', (parsed) => calls.push(parsed)).then((r) => r.status), 'failure');
+  assert.deepEqual(await renderNetlist('R1 a b', symbols, layout, undefined, 'ngspice', (parsed) => calls.push(parsed)).then((result) => result.status), 'failure');
   assert.equal(calls.length, 2, 'a parse failure never fires onParsed');
 });
 
